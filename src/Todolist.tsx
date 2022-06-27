@@ -15,7 +15,8 @@ type TodolistPropsType = {
 }
 
 const Todolist = (props: TodolistPropsType) => {
-    const taskListItem = props.tasks.map(task => {
+    const taskListItem = props.tasks.length
+        ? props.tasks.map(task => {
         return (
 
             <li>
@@ -26,7 +27,7 @@ const Todolist = (props: TodolistPropsType) => {
 
         )
             ;
-    });
+    }):<span>Your tasks list is empty</span>;
     return (
         <div>
             <h3>{props.title}</h3>

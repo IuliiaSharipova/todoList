@@ -9,7 +9,7 @@ export type TasksPropsType = {
 type TodolistPropsType = {
     title: string
     tasks: Array<TasksPropsType>
-    removeTask: (taskID:number) => void
+    removeTask: (taskID: number) => void
 }
 
 const Todolist = (props: TodolistPropsType) => {
@@ -19,7 +19,7 @@ const Todolist = (props: TodolistPropsType) => {
             <li>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
-                <button onClick={()=>props.removeTask(task.id)}>x</button>
+                <button onClick={() => props.removeTask(task.id)}>x</button>
             </li>
 
         )
@@ -27,23 +27,14 @@ const Todolist = (props: TodolistPropsType) => {
     });
     return (
         <div>
-            {/*Header*/}
-            {/*Title*/}
             <h3>{props.title}</h3>
-            {/*Input form*/}
             <div>
                 <input/>
                 <button>+</button>
             </div>
-            {/*Tasks list*/}
             <ul>
                 {taskListItem}
-                {/*Task
-                <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>*/}
             </ul>
-            {/*Buttons block*/}
             <div>
                 {/*Button*/}
                 <button>All</button>

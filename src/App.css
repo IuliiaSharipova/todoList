@@ -6,3 +6,19 @@
 .App > div {
   margin-right: 50px;
 }
+.isDone{
+  text-decoration: line-through;
+  color: hotpink;
+  font-weight: bold;
+}
+.active{
+  background-color: hotpink;
+  color:white;
+  font-weight: bold;
+  border: 3px solid hotpink;
+  border-radius: 5px;
+}
+.error{
+  border: 3px solid hotpink;
+  outline: none;
+}

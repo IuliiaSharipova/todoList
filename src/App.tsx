@@ -14,7 +14,11 @@ function App() {
         {id: v1(), title: 'CSS', isDone: true},
         {id: v1(), title: 'JS/ES6', isDone: false},
     ]);
-    const addTask = (title:string) => {
+    const [filter, setFilter] = useState<FilterValuesType>
+    (
+        'all'
+    );
+    const addTask = (title: string) => {
         const newTask: TasksPropsType = {
             id: v1(),
             title,
@@ -22,16 +26,14 @@ function App() {
         };
         setTasks([newTask, ...tasks]);
     };
-
+    const changeFilter = (filter: FilterValuesType) => {
+        setFilter(filter);
+    };
     const removeTask = (taskID: string) => {
         /*  const updatedTasks = tasks.filter(task => task.id !== taskID);
           setTasks(updatedTasks);*/
         setTasks(tasks.filter(task => task.id !== taskID));
     };
-    const [filter, setFilter] = useState<FilterValuesType>
-    (
-        'all'
-    );
 
     let tasksForRender;
     switch (filter) {
@@ -44,13 +46,20 @@ function App() {
         default:
             tasksForRender = tasks;
     }
-    const changeFilter = (filter: FilterValuesType) => {
-        setFilter(filter);
+
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t));
     };
 //UI:
     return (
         <div className="App">
-            <Todolist title={title} tasks={tasksForRender} removeTask={removeTask} changeFilter={changeFilter} addTask={addTask}/>
+            <Todolist title={title}
+                      tasks={tasksForRender}
+                      filter={filter}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}/>
         </div>
     );
 }

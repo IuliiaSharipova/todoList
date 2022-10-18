@@ -35,11 +35,17 @@ function App() {
     };
 
     const addTask = (newTitle: string) => {
-        let newTask = {id: v1(), title: newTitle, isDone: false};
-        let newTasks = [newTask, ...tasks];
-        setTasks(newTasks);
+            let newTask = {id: v1(), title: newTitle, isDone: false};
+            let newTasks = [newTask, ...tasks];
+            setTasks(newTasks);
     };
-
+    const onChangeTaskStatus = (taskId: string, isDone: boolean) => {
+        let taskToChangeStatus = tasks.find(t => t.id === taskId);
+        if (taskToChangeStatus) {
+            taskToChangeStatus.isDone = isDone;
+        }
+        setTasks([...tasks]);
+    };
     return (
         <div className="App">
             <Todolist title="What to learn"
@@ -47,6 +53,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      onChangeTaskStatus={onChangeTaskStatus}
+                      filter={filter}
             />
         </div>
     );

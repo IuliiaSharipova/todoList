@@ -2,6 +2,9 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {EditableSpan} from './components/EditableSpan';
 import {Input} from './components/Input';
+import {Button, ButtonGroup, Checkbox, IconButton} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 type TaskType = {
     id: string
@@ -49,7 +52,10 @@ export function Todolist(props: TodolistType) {
         <div>
             <h3>
                 <EditableSpan title={props.title} callback={editTodolistHandler}/>
-                <button onClick={removeTodolistHandler}>x</button>
+                <IconButton aria-label="delete"
+                            onClick={removeTodolistHandler}>
+                    <DeleteIcon/>
+                </IconButton>
             </h3>
             <Input callback={addTaskHandler}/>
             <ul>
@@ -61,28 +67,49 @@ export function Todolist(props: TodolistType) {
 
                     return (
                         <li key={t.id}>
-                            <input type="checkbox"
-                                   checked={t.isDone}
-                                   onChange={onCheckBoxChangeHandler}
-                                   className={t.isDone ? 'is-done' : ''}
+                            <Checkbox color="secondary"
+                                      checked={t.isDone} onChange={onCheckBoxChangeHandler}
                             />
                             <EditableSpan title={t.title}
                                           callback={(newTitle) => editTaskHandler(t.id, newTitle)}/>
-                            <button onClick={() => onRemoveTaskClickHandler(t.id)}>x</button>
+                            <IconButton aria-label="delete"
+                                        size="small"
+                                        onClick={() => onRemoveTaskClickHandler(t.id)}>
+                                <DeleteIcon fontSize="inherit"/>
+                            </IconButton>
                         </li>
                     );
                 })}
             </ul>
             <div>
-                <button onClick={onnAllClickHandler}
-                        className={props.filter === 'all' ? 'active-filter' : ''}>All
-                </button>
-                <button onClick={onActiveClickHandler}
-                        className={props.filter === 'active' ? 'active-filter' : ''}>Active
-                </button>
-                <button onClick={onCompletedClickHandler}
-                        className={props.filter === 'completed' ? 'active-filter' : ''}>Completed
-                </button>
+                <ButtonGroup variant="outlined" aria-label="outlined button group">
+                    <Button color="secondary"
+                            style={{
+                                maxWidth: '60px',
+                                maxHeight: '25px',
+                                marginRight: '10px'
+                            }}
+                            onClick={onnAllClickHandler}
+                            className={props.filter === 'all' ? 'active-filter' : ''}>All</Button>
+                    <Button color="success"
+                            style={{
+                                maxWidth: '60px',
+                                maxHeight: '25px',
+                                marginRight: '10px'
+                            }}
+                            onClick={onActiveClickHandler}
+                            className={props.filter === 'active' ? 'active-filter' : ''}>Active
+                    </Button>
+                    <Button color="inherit"
+                            style={{
+                                maxWidth: '100px',
+                                maxHeight: '25px',
+                                marginRight: '10px'
+                            }}
+                            onClick={onCompletedClickHandler}
+                            className={props.filter === 'completed' ? 'active-filter' : ''}>Completed
+                    </Button>
+                </ButtonGroup>
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Button, TextField} from '@mui/material';
 
 type InputType = {
     callback: (title: string) => void
@@ -28,14 +29,20 @@ export const Input = (props: InputType) => {
         <div>
 
             <div>
-                <input value={title}
-                       onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}
-                       className={error ? 'error' : ''}
+                <TextField id="outlined-basic"
+                           label={error ? "" : 'Title'}
+                           variant="outlined"
+                           size='small'
+                           value={title}
+                           onChange={onChangeHandler}
+                           onKeyDown={onKeyDownHandler}
+                           error={!!error}
+                           helperText={error}
                 />
-                <button onClick={addItemHandler}>+</button>
-                {error &&
-                    <div className={'error-message'}>{error}</div>}
+                <Button color="secondary"
+                        style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', backgroundColor:'darkgrey'}}
+                        onClick={addItemHandler}
+                        >+</Button>
             </div>
         </div>
     );

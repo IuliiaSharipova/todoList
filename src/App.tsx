@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
+import {Input} from './components/Input';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -66,8 +67,28 @@ function App() {
         setTodolists(todolists.filter(todo => todo.id !== todoId));
         delete tasks[todoId];
     };
+    const addTodolist = (newTitle: string) => {
+        const newTodolistID = v1();
+        const newTodolist: TodolistsType = {id: newTodolistID, title: newTitle, filter: 'all'};
+        setTodolists([newTodolist, ...todolists]);
+        setTasks({...tasks, [newTodolistID]: []});
+    };
+
+    const editTask = (todoId: string, taskId: string, newTitle: string) => {
+        debugger
+        setTasks({
+            ...tasks,
+            [todoId]: tasks[todoId].map(task => task.id === taskId ? {...task, title: newTitle} : task)
+        });
+    };
+
+    const editTodolist = (todoId: string, newTitle: string) => {
+        setTodolists(todolists.map(todo => todo.id === todoId ? {...todo, title: newTitle} : todo));
+    };
+
     return (
         <div className="App">
+            <Input callback={addTodolist}/>
             {todolists.map(todo => {
                 let tasksForTodolist = tasks[todo.id];
                 if (todo.filter === 'active') {
@@ -76,6 +97,7 @@ function App() {
                 if (todo.filter === 'completed') {
                     tasksForTodolist = tasksForTodolist.filter(t => t.isDone);
                 }
+
                 return (<Todolist key={todo.id}
                                   todoId={todo.id}
                                   title={todo.title}
@@ -86,6 +108,8 @@ function App() {
                                   onChangeTaskStatus={onChangeTaskStatus}
                                   filter={todo.filter}
                                   removeTodolist={removeTodolist}
+                                  editTodolist={editTodolist}
+                                  editTask={editTask}
                 />);
             })}
         </div>

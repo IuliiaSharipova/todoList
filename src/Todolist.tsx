@@ -87,7 +87,6 @@ export function Todolist(props: TodolistType) {
                             style={{
                                 maxWidth: '60px',
                                 maxHeight: '25px',
-                                marginRight: '10px'
                             }}
                             onClick={onnAllClickHandler}
                             className={props.filter === 'all' ? 'active-filter' : ''}>All</Button>
@@ -95,7 +94,6 @@ export function Todolist(props: TodolistType) {
                             style={{
                                 maxWidth: '60px',
                                 maxHeight: '25px',
-                                marginRight: '10px'
                             }}
                             onClick={onActiveClickHandler}
                             className={props.filter === 'active' ? 'active-filter' : ''}>Active
@@ -104,7 +102,6 @@ export function Todolist(props: TodolistType) {
                             style={{
                                 maxWidth: '100px',
                                 maxHeight: '25px',
-                                marginRight: '10px'
                             }}
                             onClick={onCompletedClickHandler}
                             className={props.filter === 'completed' ? 'active-filter' : ''}>Completed

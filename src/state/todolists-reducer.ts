@@ -13,7 +13,7 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
         case 'REMOVE-TODOLIST':
             return state.filter(todo => todo.id !== action.payload.todolistId);
         case 'ADD-TODOLIST':
-            let newTodolist: TodolistType = {id: v1(), title: action.payload.newTodolistTitle, filter: 'all'};
+            let newTodolist: TodolistType = {id: action.payload.todolistId, title: action.payload.newTodolistTitle, filter: 'all'};
             return [...state, newTodolist];
         case 'CHANGE-TODOLIST-TITLE':
             return state.map(todo=>todo.id===action.payload.todolistId ? {...todo, title:action.payload.newTodolistTitle} :todo)
@@ -37,7 +37,7 @@ export type addTodolistType = ReturnType<typeof addTodolistAC>
 export const addTodolistAC = (newTodolistTitle: string) => {
     return {
         type: 'ADD-TODOLIST',
-        payload: {newTodolistTitle}
+        payload: {newTodolistTitle,todolistId:v1()},
     } as const;
 };
 

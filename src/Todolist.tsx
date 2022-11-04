@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from './App';
 import {EditableSpan} from './components/EditableSpan';
 import {Input} from './components/Input';
@@ -37,9 +37,9 @@ export function Todolist(props: TodolistType) {
         props.removeTodolist(props.todoId);
     };
 
-    const addTaskHandler = (newTitle: string) => {
+    const addTaskHandler = useCallback((newTitle: string) => {
         props.addTask(props.todoId, newTitle);
-    };
+    }, []);
     const editTodolistHandler = (newTitle: string) => {
         props.editTodolist(props.todoId, newTitle);
     };

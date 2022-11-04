@@ -1,10 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import {Button, TextField} from '@mui/material';
 
 type InputType = {
     callback: (title: string) => void
 }
-export const Input = (props: InputType) => {
+export const Input = React.memo((props: InputType) => {
+
     const [title, setTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
 
@@ -20,7 +21,9 @@ export const Input = (props: InputType) => {
         setTitle(e.currentTarget.value);
     };
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError('');
+        if (error !== null) {
+            setError('');
+        }
         if (e.key === 'Enter') {
             addItemHandler();
         }
@@ -30,9 +33,9 @@ export const Input = (props: InputType) => {
 
             <div>
                 <TextField id="outlined-basic"
-                           label={error ? "" : 'Title'}
+                           label={error ? '' : 'Title'}
                            variant="outlined"
-                           size='small'
+                           size="small"
                            value={title}
                            onChange={onChangeHandler}
                            onKeyDown={onKeyDownHandler}
@@ -40,10 +43,16 @@ export const Input = (props: InputType) => {
                            helperText={error}
                 />
                 <Button color="secondary"
-                        style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', backgroundColor:'darkgrey'}}
+                        style={{
+                            maxWidth: '30px',
+                            maxHeight: '30px',
+                            minWidth: '30px',
+                            minHeight: '30px',
+                            backgroundColor: 'darkgrey'
+                        }}
                         onClick={addItemHandler}
-                        >+</Button>
+                >+</Button>
             </div>
         </div>
     );
-};
+});

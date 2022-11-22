@@ -1,33 +1,51 @@
-import React, {ChangeEvent, KeyboardEvent,  useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
+
+import {Input} from '../components/Input';
+import {action} from '@storybook/addon-actions';
 import {Button, TextField} from '@mui/material';
 
-type InputType = {
-    callback: (title: string) => void
-}
-export const Input = React.memo((props: InputType) => {
+export default {
+    title: 'Todolist Components/Input',
+    component: Input,
+    argTypes: {
+        callback: {description: 'Button clicked inside form'},
+    },
+} as ComponentMeta<typeof Input>;
 
-    const [title, setTitle] = useState('');
-    const [error, setError] = useState<string | null>(null);
+const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
+
+export const InputStory = Template.bind({});
+InputStory.args = {
+    callback: action('Button clicked inside form')
+};
+
+const TemplateWithError: ComponentStory<typeof Input> = (args) => {
+    let [title, setTitle] = useState('');
+    let [error, setError] = useState<string | null>('Title is required');
 
     const addItemHandler = () => {
         if (title.trim() !== '') {
-            props.callback(title.trim());
+            args.callback(title.trim());
             setTitle('');
         } else {
             setError('Title is required');
         }
     };
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
+
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
-            setError('');
+            setError(null);
         }
         if (e.key === 'Enter') {
             addItemHandler();
         }
     };
+
     return (
         <div>
 
@@ -55,4 +73,8 @@ export const Input = React.memo((props: InputType) => {
             </div>
         </div>
     );
-});
+};
+export const InputWithErrStory = TemplateWithError.bind({});
+InputWithErrStory.args = {
+    callback: action('Button clicked inside form')
+};

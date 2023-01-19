@@ -1,23 +1,19 @@
 import React, {ChangeEvent, useCallback} from 'react';
-import {FilterValuesType} from './App';
 import {EditableSpan} from './components/EditableSpan';
 import {Input} from './components/Input';
 import {Button, ButtonGroup, Checkbox, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {TaskStatuses, TaskType} from './api/todolists-api';
+import {FilterValuesType} from './state/todolists-reducer';
 
 
-type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 type TodolistType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (todoId: string, taskId: string) => void
     changeFilter: (todoId: string, value: FilterValuesType) => void
     addTask: (todoId: string, newTitle: string) => void
-    onChangeTaskStatus: (todoId: string, taskId: string, isDone: boolean) => void
+    onChangeTaskStatus: (todoId: string, taskId: string, status: TaskStatuses) => void
     filter: FilterValuesType
     todoId: string
     removeTodolist: (todoId: string) => void
@@ -62,13 +58,13 @@ export function Todolist(props: TodolistType) {
                 {props.tasks.map(t => {
                     const onCheckBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
-                        props.onChangeTaskStatus(props.todoId, t.id, newIsDoneValue);
+                        props.onChangeTaskStatus(props.todoId, t.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New);
                     };
 
                     return (
                         <li key={t.id}>
                             <Checkbox color="secondary"
-                                      checked={t.isDone} onChange={onCheckBoxChangeHandler}
+                                      checked={t.status === TaskStatuses.Completed} onChange={onCheckBoxChangeHandler}
                             />
                             <EditableSpan title={t.title}
                                           callback={(newTitle) => editTaskHandler(t.id, newTitle)}/>

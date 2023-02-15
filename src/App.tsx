@@ -5,13 +5,9 @@ import {v1} from 'uuid';
 import {Input} from './components/Input';
 import BasicAppBar from './components/BasicAppBar';
 import {Container, Grid, Paper} from '@mui/material';
-import {TaskPriorities, TaskStatuses, TaskType} from './api/todolists-api';
+import {TaskPriorities, TaskStatuses} from './api/todolists-api';
 import {FilterValuesType, TodolistDomainType} from './state/todolists-reducer';
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
+import {TasksStateType} from './AppWithRedux';
 
 function App() {
     let todolistID1 = v1();
@@ -144,7 +140,6 @@ function App() {
     };
 
     const editTask = (todoId: string, taskId: string, newTitle: string) => {
-        debugger
         setTasks({
             ...tasks,
             [todoId]: tasks[todoId].map(task => task.id === taskId ? {...task, title: newTitle} : task)

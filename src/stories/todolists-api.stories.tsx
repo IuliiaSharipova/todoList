@@ -6,13 +6,13 @@ export default {
 };
 export const GetTodolist = () => {
     const [state, setState] = useState<any>(null);
-    useEffect(() => { // place for creating request
+    useEffect(() => { // place for creating request or other side effects
         todolistsApi.getTodolist()
             .then((res) => {
                 setState(res.data);
             });
 
-    }, []);
+    }, []);//working with the first render of the component
     // response will be placed in div as string
     return <div>{JSON.stringify(state)}</div>;
 };

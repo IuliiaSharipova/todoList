@@ -8,7 +8,7 @@ export const GetTasks = () => {
     const [state, setState] = useState<any>(null);
     useEffect(() => { // place for creating request
         const todolistId = '644b896a-ce7d-4159-8363-610bd47d210b';
-        todolistsApi.getTask(todolistId)
+        todolistsApi.getTasks(todolistId)
             .then((res) => {
                 setState(res.data);
             });

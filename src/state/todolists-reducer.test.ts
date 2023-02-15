@@ -24,7 +24,6 @@ beforeEach(() => {
 
 test('correct todolist should be removed', () => {
 
-    /*const endState = todolistsReducer(startState, { type: 'REMOVE-TODOLIST', id: todolistId1})*/
     const endState = todolistsReducer(startState, removeTodolistAC(todolistId1));
 
     expect(endState.length).toBe(1);
@@ -33,27 +32,17 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let newTodolistTitle = 'New Todolist';
+    const newTodolist = {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0};
 
-    /*  const endState = todolistsReducer(startState, {type: 'ADD-TODOLIST', title: newTodolistTitle})*/
-    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle));
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolist));
 
     expect(endState.length).toBe(3);
-    expect(endState[2].title).toBe(newTodolistTitle);
+    expect(endState[2].title).toBe(newTodolist.title);
 });
 
 test('correct todolist should change its name', () => {
 
     let newTodolistTitle = 'New Todolist';
-
-
-    /* const action = {
-         type: 'CHANGE-TODOLIST-TITLE',
-         id: todolistId2,
-         title: newTodolistTitle
-     }
-
-     const endState = todolistsReducer(startState, action)*/
 
     const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, newTodolistTitle));
 
@@ -64,15 +53,6 @@ test('correct todolist should change its name', () => {
 test('correct filter of todolist should be changed', () => {
 
     let newFilter: FilterValuesType = 'completed';
-
-
-    /*const action = {
-        type: 'CHANGE-TODOLIST-FILTER',
-        id: todolistId2,
-        filter: newFilter
-    }
-
-    const endState = todolistsReducer(startState, action)*/
     const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter));
 
     expect(endState[0].filter).toBe('all');

@@ -41,7 +41,6 @@ export function Todolist(props: TodolistType) {
     };
 
     const editTaskHandler = (taskId: string, newTitle: string) => {
-        debugger
         props.editTask(props.todoId, taskId, newTitle);
     };
     return (

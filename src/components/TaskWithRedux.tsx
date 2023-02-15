@@ -2,32 +2,34 @@ import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../state/tasks-reducer';
-import {useDispatch} from 'react-redux';
+import {removeTaskTC, updateTaskTC} from '../state/tasks-reducer';
 import {TaskStatuses, TaskType} from '../api/todolists-api';
+import {useAppDispatch} from '../state/store';
 
 type TaskPropsType = {
     task: TaskType
     todoId: string
 }
 export const TaskWithRedux = memo(({task, todoId}: TaskPropsType) => {
-    console.log('task');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const onCheckBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
+    const onCheckBoxChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        dispatch(changeTaskStatusAC(todoId, task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New));
-    };
-    const onRemoveTaskClickHandler = (taskId: string) => dispatch(removeTaskAC(todoId, taskId));
+        dispatch(updateTaskTC(todoId, task.id, newIsDoneValue
+            ? {status:TaskStatuses.Completed}
+            : {status:TaskStatuses.New}));
+    },[dispatch]);
+
+    const onRemoveTaskClickHandler = useCallback((taskId: string) => dispatch(removeTaskTC(todoId, taskId)),[dispatch]);
 
     const editTaskHandler = useCallback((taskId: string, newTitle: string) => {
-        dispatch(changeTaskTitleAC(todoId, taskId, newTitle));
+        dispatch(updateTaskTC(todoId, taskId, {title:newTitle}));
     }, [dispatch]);
     return (
         <div>
             <Checkbox color="secondary"
-                      checked={task.status === TaskStatuses.Completed} onChange={onCheckBoxChangeHandler}
+                      checked={task.status === TaskStatuses.Completed}
+                      onChange={onCheckBoxChangeHandler}
             />
             <EditableSpan title={task.title}
                           callback={useCallback((newTitle) => editTaskHandler(task.id, newTitle), [task.id])}/>

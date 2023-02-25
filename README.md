@@ -22,6 +22,6 @@ $ git clone https://github.com/IuliiaSharipova/todoList.git
 # Go into the repository
 $ cd todolist
 # Install dependencies
-$ npm install
+$ yarn install
 # Run the app
 $ yarn start

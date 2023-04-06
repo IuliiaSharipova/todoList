@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import {Input} from '../components/Input';
+import {Input} from './Input';
 import {action} from '@storybook/addon-actions';
 import {Button, TextField} from '@mui/material';
 

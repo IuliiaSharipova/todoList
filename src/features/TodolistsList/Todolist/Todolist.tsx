@@ -1,19 +1,18 @@
 import React, {memo, useCallback, useEffect} from 'react';
-import {EditableSpan} from './components/EditableSpan';
-import {Input} from './components/Input';
+import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
+import {Input} from '../../../components/Input/Input';
 import {Button, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType, useAppDispatch, useAppSelector} from './state/store';
+import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC, changeTodolistTitleTC,
+    changeTodolistTitleTC,
     FilterValuesType,
-    removeTodolistAC, removeTodolistTC
-} from './state/todolists-reducer';
-import {addTaskAC, addTaskTC, fetchTasksTC} from './state/tasks-reducer';
-import {TaskWithRedux} from './components/TaskWithRedux';
-import {TaskStatuses, TaskType} from './api/todolists-api';
+    removeTodolistTC
+} from './todolists-reducer';
+import {addTaskTC, fetchTasksTC} from './Task/tasks-reducer';
+import {Task} from './Task/Task';
+import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 
 
 type TodolistWithReduxType = {
@@ -22,7 +21,7 @@ type TodolistWithReduxType = {
     filter: FilterValuesType
 }
 
-export const TodolistWithRedux = memo(({todoId, title, filter}: TodolistWithReduxType) => {
+export const Todolist = memo(({todoId, title, filter}: TodolistWithReduxType) => {
     let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[todoId]);
     const dispatch = useAppDispatch();
 
@@ -44,15 +43,12 @@ export const TodolistWithRedux = memo(({todoId, title, filter}: TodolistWithRedu
     const removeTodolistHandler = () => {
         dispatch(removeTodolistTC(todoId));
     };
-
     const addTaskHandler = useCallback((newTitle: string) => {
         dispatch(addTaskTC(todoId, newTitle));
     }, [dispatch]);
-
     const editTodolistHandler = useCallback((newTitle: string) => {
         dispatch(changeTodolistTitleTC(todoId, newTitle));
     }, [dispatch]);
-
 
     return (
         <div>
@@ -66,9 +62,9 @@ export const TodolistWithRedux = memo(({todoId, title, filter}: TodolistWithRedu
             <Input callback={addTaskHandler}/>
             <ul>
                 {tasksForTodolist.map(t => {
-                    return <TaskWithRedux key={t.id}
-                                          task={t}
-                                          todoId={todoId}/>;
+                    return <Task key={t.id}
+                                 task={t}
+                                 todoId={todoId}/>;
                 })}
             </ul>
             <div>

@@ -1,13 +1,12 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-
-import {TaskWithRedux} from '../components/TaskWithRedux';
-import {ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {Task} from './Task';
+import {ReduxStoreProviderDecorator} from '../../../../stories/decorators/ReduxStoreProviderDecorator';
+import {TaskPriorities, TaskStatuses} from '../../../../api/todolists-api';
 
 export default {
     title: 'Todolist Components/Task',
-    component: TaskWithRedux,
+    component: Task,
     decorators: [ReduxStoreProviderDecorator],
     args: {
         task: {
@@ -23,10 +22,10 @@ export default {
         },
         todoId: 'todolistId1',
     }
-} as ComponentMeta<typeof TaskWithRedux>;
+} as ComponentMeta<typeof Task>;
 
 
-const Template: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux {...args} />;
+const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
 export const TaskIsDoneStory = Template.bind({});
 TaskIsDoneStory.args = {};
